@@ -1,0 +1,8 @@
+- [x] Project scaffolded: Minimal Django project 'usb_wipe_tool' with app 'wiper'.
+- [x] Custom code and templates added per requirements.
+- [x] README.md created with install/run/warning instructions.
+- [ ] Install required Python packages: django, psutil.
+- [ ] Run migrations and start server for demo.
+- [ ] Test drive detection, wipe, and format features.
+- [ ] Confirm safety features (confirmation, system drive protection, dry_run default).
+- [ ] Documentation complete and up to date.

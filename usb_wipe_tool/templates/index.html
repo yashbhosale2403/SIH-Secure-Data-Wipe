@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>USB Wipe Tool</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto py-8">
+        <h1 class="text-3xl font-bold mb-6">USB Wipe Tool</h1>
+        <table class="min-w-full bg-white rounded shadow">
+            <thead>
+                <tr>
+                    <th class="py-2 px-4">Drive</th>
+                    <th class="py-2 px-4">Size</th>
+                    <th class="py-2 px-4">Filesystem</th>
+                    <th class="py-2 px-4">Type</th>
+                    <th class="py-2 px-4">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for d in drives %}
+                <tr class="border-t">
+                    <td class="py-2 px-4 font-bold">{{ d.letter }}</td>
+                    <td class="py-2 px-4">{{ d.size|filesizeformat }}</td>
+                    <td class="py-2 px-4">{{ d.filesystem }}</td>
+                    <td class="py-2 px-4">{{ d.type }}</td>
+                    <td class="py-2 px-4">
+                        <form action="/wipe/" method="post" class="inline">
+                            {% csrf_token %}
+                            <input type="hidden" name="drive_letter" value="{{ d.letter }}">
+                            <input type="hidden" name="dry_run" value="true">
+                            <input type="hidden" name="method" value="zero">
+                            <input type="hidden" name="passes" value="1">
+                            <input type="text" name="confirm" placeholder="Type {{ d.letter }} to confirm" class="border rounded px-2 py-1 text-xs" required>
+                            <button type="submit" class="bg-blue-500 text-white px-3 py-1 rounded ml-2">Dry Run Wipe</button>
+                        </form>
+                        <form action="/wipe/" method="post" class="inline ml-2">
+                            {% csrf_token %}
+                            <input type="hidden" name="drive_letter" value="{{ d.letter }}">
+                            <input type="hidden" name="dry_run" value="false">
+                            <input type="hidden" name="method" value="zero">
+                            <input type="hidden" name="passes" value="1">
+                            <input type="text" name="confirm" placeholder="Type {{ d.letter }} to confirm" class="border rounded px-2 py-1 text-xs" required>
+                            <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded ml-2">Permanent Wipe</button>
+                        </form>
+                        <form action="/format/" method="post" class="inline ml-2">
+                            {% csrf_token %}
+                            <input type="hidden" name="drive_letter" value="{{ d.letter }}">
+                            <input type="hidden" name="fs" value="FAT32">
+                            <input type="text" name="confirm" placeholder="Type {{ d.letter }} to confirm" class="border rounded px-2 py-1 text-xs" required>
+                            <button type="submit" class="bg-yellow-500 text-white px-3 py-1 rounded ml-2">Format</button>
+                        </form>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="5" class="py-4 text-center text-gray-500">No removable drives detected.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
