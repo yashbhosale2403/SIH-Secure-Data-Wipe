@@ -1,3 +1,5 @@
+> **Archived.** This was my first SIH 2025 prototype for USB wiping. It has been superseded by [SENTINEL-X](https://github.com/yashbhosale2403/data-cleaning), my SIH26149 platform for NIST SP 800-88 media sanitization, forensic file recovery and tamper-evident audit logs.
+
 # USB Wipe Tool
 
 A minimal Django demo for safely wiping and formatting removable USB drives on Windows.
